@@ -23,14 +23,31 @@ function filterNear(point, base_point, range) {
 }
 class Manager {
     constructor() {
-        const canvas = document.createElement("canvas");
-            canvas.id = "bg";
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        document.body.appendChild(canvas);
-        this.lineCanvas = canvas;
+        const dotCanvas = document.createElement("canvas");
+            dotCanvas.className = "bg";
+            dotCanvas.width = window.innerWidth;
+            dotCanvas.height = window.innerHeight;
+            dotCanvas.style.zIndex = 98;
+        document.body.appendChild(dotCanvas);
+        this.dotCanvas = dotCanvas;
+        this.dotCtx = this.dotCanvas.getContext("2d");
+
+        const lineCanvas = document.createElement("canvas");
+            lineCanvas.className = "bg";
+            lineCanvas.width = window.innerWidth;
+            lineCanvas.height = window.innerHeight;
+            lineCanvas.style.zIndex = 99;
+        document.body.appendChild(lineCanvas);
+        this.lineCanvas = lineCanvas;
         this.lineCtx = this.lineCanvas.getContext("2d");
         this.points = [];
+    }
+    drawDots(radius) {
+        this.points.forEach(p => {
+            this.dotCtx.beginPath();
+            this.dotCtx.arc(p.x, p.y, radius, 0, 2 * Math.PI)
+            this.dotCtx.fill();
+        });
     }
     clearPoints() {
         this.points = [];
@@ -186,5 +203,5 @@ class Manager {
 }
 const manager = new Manager();
 manager.genRandom(50);
+manager.drawDots(1.5);
 document.addEventListener("mousemove", (e) => { manager.multiLine(e) })
-window.addEventListener("resize", manager.refresh());
