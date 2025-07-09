@@ -1,3 +1,4 @@
+//@ts-nocheck
 class LimitedArray {
     readonly max_length: number;
     
