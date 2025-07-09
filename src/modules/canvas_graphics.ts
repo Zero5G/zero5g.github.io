@@ -64,12 +64,14 @@ class Graphics {
     _layers: Array<Layer> = [];
     default_fill: string | CanvasGradient | CanvasPattern = "rgb(0 0 0 / 100%)";
     default_stroke: string | CanvasGradient | CanvasPattern = "rgb(0 0 0 / 100%)";
+    default_line_width: number = 1;
 
     constructor(layer_id: number, height: number, width: number) {
         const layer = this.newLayer(layer_id, height, width);
         if (layer) {
             this.default_fill = layer.ctx.fillStyle;
             this.default_stroke = layer.ctx.strokeStyle;
+            this.default_line_width = layer.ctx.lineWidth;
         }
     }
 
@@ -97,8 +99,10 @@ class Graphics {
         }
     }
 
-    line(layer_id: number, start: XY, end: XY, style: string) {
+    line(layer_id: number, start: XY, end: XY, width: number, style: string) {
         const ctx = this.getLayer(layer_id).ctx;
+            ctx.lineWidth = width;
+            ctx.beginPath();
             ctx.moveTo(start.x, start.y);
             ctx.lineTo(end.x, end.y);
         this.draw(ctx, style, false);
@@ -123,6 +127,7 @@ class Graphics {
         }
         ctx.closePath();
     }
+
     append(parent: HTMLElement, all: boolean = false, layer_id?: number) {
         if (all) {
             this._layers.forEach(l => {

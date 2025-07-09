@@ -2,3 +2,18 @@
     margin: 0;
     padding: 0;
 }
+#background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -999;
+}
+#background > canvas {
+    /* filter: blur(1px); */
+}
+#body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
