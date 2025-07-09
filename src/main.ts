@@ -1,6 +1,13 @@
-console.log("Hello world");
-console.log("Test2");
+import * as CG from "./modules/canvas_graphics.js";
 
-setTimeout(()=>{
-    document.body.innerText = "TEST3"
-}, 4500)
+const graphics = new CG.Graphics(0, window.innerHeight, window.innerWidth);
+
+graphics.circle(0, new CG.XY(50, 50), 50, "red", true);
+
+graphics.line(0,
+    new CG.XY(30, 80), new CG.XY(40, 70), "blue"
+)
+
+graphics.append(
+    document.body, true
+);
