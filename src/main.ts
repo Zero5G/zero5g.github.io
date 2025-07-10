@@ -6,4 +6,4 @@ const background = document.querySelector("#background");
 graphics.append(
     //@ts-ignore
     background, true
-);
+)

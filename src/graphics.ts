@@ -1,7 +1,7 @@
 import * as CG from "./modules/canvas_graphics.js";
-import { ResizeEnd } from "./modules/custom_events.js";
+import { ExpandedResize } from "./modules/custom_events.js";
 
-new ResizeEnd(500);
+new ExpandedResize(500);
 
 const dot_layer_id = 0;
 const line_layer_id = 1;
@@ -12,29 +12,36 @@ const graphics = new CG.Graphics(dot_layer_id, window.innerHeight, window.innerH
     graphics.append(background, false, dot_layer_id);
 const dot_layer = graphics.getLayer(dot_layer_id);
 
+function generatePoints(height: number, width: number, interval: number): number[][] {
+    let points: number[][] = [];
+
+    const count_x = Math.floor(width / interval);
+    const count_y = Math.floor(height / interval);
+
+    for (let i = 0; i < count_x; i++) {
+        for (let j = 0; j < count_y; j++) {
+            
+        }
+    }
+
+    return points;
+}
+
 function handleResizeStart() {
     dot_layer.clearAll();
 }
 
-function handleResizeEnd(event: UIEvent) {
+function handleResizeEnd() {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
     dot_layer.resize(width, height);
-    draw();
 }
 
-function draw() {
-    graphics.circle(0, new CG.XY(50, 50), 50, "red", true);
+document.addEventListener("DOMContentLoaded", () => {
 
-    graphics.line(0,
-        new CG.XY(30, 80), new CG.XY(400, 700), 8, "blue"
-    )
-}
-draw();
+})
 //@ts-ignore
 window.addEventListener("resizeEnd", handleResizeEnd);
 //@ts-ignore
 window.addEventListener("resizeStart", handleResizeStart);
-/* const observer = new ResizeObserver(handleBodyResize);
-    observer.observe(document.body); */

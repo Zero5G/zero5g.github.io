@@ -1,4 +1,4 @@
-class ResizeEnd {
+class ExpandedResize {
     timeout: any;
     delay: number;
     running: boolean = false;
@@ -24,4 +24,4 @@ class ResizeEnd {
     }
 }
 
-export { ResizeEnd };
+export { ExpandedResize };
