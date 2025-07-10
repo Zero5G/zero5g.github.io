@@ -52,6 +52,14 @@ class Layer {
     }
     public get width(): number { return this._width }
     
+    public resize(new_width: number, new_height: number) {
+        this._width = new_width;
+        this._height = new_height;
+
+        this.element.width = new_width;
+        this.element.height = new_height;
+    }
+
     public clear(start: XY, end: XY) {
         this.ctx.clearRect(start.x, start.y, end.x, end.y)  
     }
@@ -61,7 +69,7 @@ class Layer {
     }
 }
 class Graphics {
-    _layers: Array<Layer> = [];
+    _layers: Layer[] = [];
     default_fill: string | CanvasGradient | CanvasPattern = "rgb(0 0 0 / 100%)";
     default_stroke: string | CanvasGradient | CanvasPattern = "rgb(0 0 0 / 100%)";
     default_line_width: number = 1;
@@ -99,7 +107,7 @@ class Graphics {
         }
     }
 
-    line(layer_id: number, start: XY, end: XY, width: number, style: string) {
+    public line(layer_id: number, start: XY, end: XY, width: number, style: string) {
         const ctx = this.getLayer(layer_id).ctx;
             ctx.lineWidth = width;
             ctx.beginPath();
@@ -108,14 +116,14 @@ class Graphics {
         this.draw(ctx, style, false);
     }
 
-    circle(layer_id: number, center: XY, radius: number, style: string, full: boolean = true) {
+    public circle(layer_id: number, center: XY, radius: number, style: string, full: boolean = true) {
         const ctx = this.getLayer(layer_id).ctx;
             ctx.beginPath()
             ctx.arc(center.x, center.y, radius, 0, Math.PI * 2);
         this.draw(ctx, style, full);
     }
     
-    draw(ctx: CanvasRenderingContext2D, style: string, full: boolean) {
+    private draw(ctx: CanvasRenderingContext2D, style: string, full: boolean) {
         if (full) {
             ctx.fillStyle = style;
             ctx.fill();
@@ -128,7 +136,8 @@ class Graphics {
         ctx.closePath();
     }
 
-    append(parent: HTMLElement, all: boolean = false, layer_id?: number) {
+    public append(parent: Element | null, all: boolean = false, layer_id?: number) {
+        if (parent == null) { return; }
         if (all) {
             this._layers.forEach(l => {
                 parent.appendChild(l.element);
@@ -139,6 +148,12 @@ class Graphics {
                 this.getLayer(layer_id).element
             );
         }
+    }
+
+    public resizeAll(new_width: number, new_height: number) {
+        this._layers.forEach(l => {
+            l.resize(new_width, new_height);
+        })
     }
 }
 

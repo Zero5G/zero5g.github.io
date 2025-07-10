@@ -7,9 +7,11 @@
     top: 0;
     left: 0;
     z-index: -999;
+    overflow: hidden;
 }
 #background > canvas {
     /* filter: blur(1px); */
+    overflow: hidden;
 }
 #body {
     position: absolute;

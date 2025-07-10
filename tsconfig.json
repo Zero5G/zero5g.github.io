@@ -9,7 +9,6 @@
     "outDir": "./dist/assets/js",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-
     /* Type Checking */
     "strict": true,
   }
