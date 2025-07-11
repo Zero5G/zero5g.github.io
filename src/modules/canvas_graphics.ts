@@ -18,16 +18,19 @@ class Layer {
     readonly id: number;
     readonly ctx: CanvasRenderingContext2D;
     readonly element: HTMLCanvasElement;
+    readonly css_id: string;
 
     _height: number;
     _width: number;
 
-    constructor(id: number, height: number, width: number) {
+    constructor(id: number, css_id: string, height: number, width: number) {
         this.id = id;
+        this.css_id = css_id;
         this._height = height;
         this._width = width;
 
         let canvas = document.createElement("canvas");
+            canvas.id = css_id;
             canvas.height = height;
             canvas.width = width;
         this.element = canvas;
@@ -74,20 +77,20 @@ class Graphics {
     default_stroke: string | CanvasGradient | CanvasPattern = "rgb(0 0 0 / 100%)";
     default_line_width: number = 1;
 
-    constructor(layer_id: number, height: number, width: number) {
-        const layer = this.newLayer(layer_id, height, width);
+    constructor() {
+        const layer = document.createElement("canvas").getContext("2d");
         if (layer) {
-            this.default_fill = layer.ctx.fillStyle;
-            this.default_stroke = layer.ctx.strokeStyle;
-            this.default_line_width = layer.ctx.lineWidth;
+            this.default_fill = layer.fillStyle;
+            this.default_stroke = layer.strokeStyle;
+            this.default_line_width = layer.lineWidth;
         }
     }
 
-    public newLayer(layer_id: number, height: number, width: number): Layer | void {
+    public newLayer(layer_id: number, css_id: string, height: number, width: number): Layer | void {
         if (!this._layers.find(
             ({ id }) => id === layer_id
         )) {
-            const layer = new Layer(layer_id, height, width);
+            const layer = new Layer(layer_id, css_id, height, width);
             this._layers.push(layer);
             return layer;
         } else {
