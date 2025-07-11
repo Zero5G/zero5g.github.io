@@ -55,7 +55,7 @@ class Layer {
     public resize(new_width: number, new_height: number) {
         this._width = new_width;
         this._height = new_height;
-
+        
         this.element.width = new_width;
         this.element.height = new_height;
     }
@@ -118,7 +118,7 @@ class Graphics {
 
     public circle(layer_id: number, center: XY, radius: number, style: string, full: boolean = true) {
         const ctx = this.getLayer(layer_id).ctx;
-            ctx.beginPath()
+            ctx.beginPath();
             ctx.arc(center.x, center.y, radius, 0, Math.PI * 2);
         this.draw(ctx, style, full);
     }

@@ -3,13 +3,15 @@
     /* Visit https://aka.ms/tsconfig to read more about this file */
     /* Language and Environment */
     "target": "es6",
+    "forceConsistentCasingInFileNames": true,
     /* Modules */
     "module": "es6",
-    "rootDir": "./src",
-    "outDir": "./dist/assets/js",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
     /* Type Checking */
     "strict": true,
+    /* Output */
+    "rootDir": "./src",
+    "outDir": "./dist/assets/js",
+    "sourceMap": true
   }
 }
