@@ -11,7 +11,7 @@ const dot_radius = 2.4;
 
 const line_layer_id = 1;
 
-const tree = new Tree().fromDims(2);
+const tree = Tree.fromDims(2);
 
 let points;
 
@@ -71,14 +71,11 @@ function handleMouse(mouse: MouseEvent) {
     const point = new Point([mouseX, mouseY]);
 
     const closest_node = tree.nearest(point);
-    console.log(closest_node);
+    
     const closest = new CG.XY(
         closest_node.point.get(0),
         closest_node.point.get(1)
     )
-
-
-    console.log(closest);
 
     graphics.line(line_layer_id,
         xy, closest, 3, "black"
@@ -87,6 +84,7 @@ function handleMouse(mouse: MouseEvent) {
 
 function handleResizeStart() {
     dot_layer.clearAll();
+    line_layer.clearAll()
 }
 
 function handleResizeEnd() {
@@ -94,7 +92,9 @@ function handleResizeEnd() {
     const height = window.innerHeight;
 
     dot_layer.resize(width, height);
+    line_layer.resize(width, height);
     points = generatePoints(height, width, point_interval)
+    tree.reset();
     points.forEach(p => {
         tree.add(
             new TreeNode(
@@ -107,7 +107,6 @@ function handleResizeEnd() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log(window.innerHeight, window.innerWidth);
     points = generatePoints(window.innerHeight, window.innerWidth, point_interval);
     drawDots(graphics, dot_layer_id, points, dot_radius);
 
