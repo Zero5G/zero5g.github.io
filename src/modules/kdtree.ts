@@ -218,6 +218,7 @@ class Tree {
         return best;
     }
     private storeNodes(array: LimitedArray, node: TreeNode) {
+        //@ts-ignore
         if (!array.includes(node.point)) {
             array.push(node.point);
         }
